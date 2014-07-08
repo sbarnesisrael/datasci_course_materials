@@ -3,10 +3,10 @@ import urllib2 as urllib
 
 # See assignment1.html instructions or README for how to get these credentials
 
-api_key = "<Enter api key>"
-api_secret = "<Enter api secret>"
-access_token_key = "<Enter your access token key here>"
-access_token_secret = "<Enter your access token secret here>"
+api_key = "isBbAlpdcChIoYNdgoLpZGL5i"
+api_secret = "ZPI7zakwVg0pG8FjJGm6M9GJ8x5vy36qRvDTkIzOCbexLhFQRe"
+access_token_key = "25582334-E0luaFhyGoPbNGPUJUm4SzcMZl8QIUi8FTuYSmUJw"
+access_token_secret = "EVfQv55gypyc8IvRTZymj96O1C1FsdtOhnDRvW2wUSpTy"
 
 _debug = 0
 
@@ -20,6 +20,8 @@ http_method = "GET"
 
 http_handler  = urllib.HTTPHandler(debuglevel=_debug)
 https_handler = urllib.HTTPSHandler(debuglevel=_debug)
+
+
 
 '''
 Construct, sign, and open a twitter request
@@ -42,11 +44,21 @@ def twitterreq(url, method, parameters):
     encoded_post_data = None
     url = req.to_url()
 
-  opener = urllib.OpenerDirector()
+  '''opener = urllib.OpenerDirector()'''
+  proxy = urllib.ProxyHandler({'http': '127.0.0.1:8888'})
+  opener = urllib.build_opener(proxy)
+  urllib.install_opener(opener)
+  
   opener.add_handler(http_handler)
   opener.add_handler(https_handler)
+	
+  proxy_handler = urllib.ProxyHandler({'https': 'https://127.0.0.1:8888/'})
+  proxy_handler2 = urllib.ProxyHandler({'http': 'http://127.0.0.1:8888/'})
+  opener.add_handler(proxy_handler)
+  opener.add_handler(proxy_handler2)
 
-  response = opener.open(url, encoded_post_data)
+  response = urllib.urlopen(url)
+  '''response = opener.open(url, encoded_post_data)'''
 
   return response
 
