@@ -36,14 +36,13 @@ def main():
     hashtags = []
     hashtag_counts = {}
     state_scores = {}
-    #for line in sent_file:
-    #  term, score = line.split('\t')
-    #  scores[term] = int(score)
+    hashtag_freqs = {}
+    counter = 0
 
     for line in tweet_file:
       try:
         tweet_lines = json.loads(line, encoding='utf-8')
-	if (tweet_lines['entities']['hashtags'] != None):
+        if (tweet_lines['entities']['hashtags'] != None):
             try:
               max_index = len(tweet_lines['entities']['hashtags'])
               counter = 0
@@ -62,28 +61,15 @@ def main():
 
     for j in range(len(hashtags)-1):
       if hashtags[j] in hashtag_counts:
-        tweet_wordcounts[hashtags[j]] += 1
+        hashtag_counts[hashtags[j]] += 1
       else:
-        tweet_wordcounts[sliced_tweet[j]] = 1
-    # Compute sum of each word's count
-    tweet_sum = sum(tweet_wordcounts.itervalues())
-
-      for i in range(len(tweets)-1):
-        if state in state_scores.keys():
-          state_scores[state] += calc_score(tweets[i], scores)
-        else:
-          state_scores[state] = calc_score(tweets[i], scores)
-    #print state_scores
-    #for w in sorted(state_scores, key=state_scores.get, reverse=True):
-    #  print w, state_scores[w]
-      
-
-    #for j in range(len(states)-1):
-    #  if states[j] in state_counts:
-    #    state_counts[states[j]] += 1
-    #  else:
-    #    state_counts[states[j]] = 1
-    #print state_counts
+        hashtag_counts[hashtags[j]] = 1
+    
+    key = sorted(hashtag_counts, key=hashtag_counts.get, reverse=True)
+    for k in key:
+      while (counter <= 10):
+        print key[counter].encode('utf-8'), hashtag_counts[key[counter]]
+        counter += 1
 
 if __name__ == '__main__':
     main()
