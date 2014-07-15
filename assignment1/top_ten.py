@@ -67,7 +67,7 @@ def main():
     
     key = sorted(hashtag_counts, key=hashtag_counts.get, reverse=True)
     for k in key:
-      while (counter <= 10):
+      while (counter < 10):
         print key[counter].encode('utf-8'), hashtag_counts[key[counter]]
         counter += 1
 

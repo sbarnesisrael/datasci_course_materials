@@ -30,6 +30,7 @@ def main():
     states = []
     state_counts = {}
     state_scores = {}
+    counter = 0
     for line in sent_file:
       term, score = line.split('\t')
       scores[term] = int(score)
@@ -55,17 +56,13 @@ def main():
           state_scores[state] += calc_score(tweets[i], scores)
         else:
           state_scores[state] = calc_score(tweets[i], scores)
-    #print state_scores
-    for w in sorted(state_scores, key=state_scores.get, reverse=True):
-      print w, state_scores[w]
-      
 
-    #for j in range(len(states)-1):
-    #  if states[j] in state_counts:
-    #    state_counts[states[j]] += 1
-    #  else:
-    #    state_counts[states[j]] = 1
-    #print state_counts
+    result = sorted(state_scores, key=state_scores.get, reverse=True)
+    for k in result:
+      while (counter == 0):
+        print result[counter].encode('utf-8')#, state_scores[result[counter]]
+        counter += 1
+      
 
 if __name__ == '__main__':
     main()
