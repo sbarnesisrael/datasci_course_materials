@@ -62,9 +62,11 @@ def main():
     # Compute the frequency of each word
     for key in tweet_wordcounts:
       tweet_wordfreqs[key] = calc_freq(tweet_wordcounts[key], tweet_sum)
+      if tweet_wordfreqs[key] == None:
+        tweet_wordfreqs[key].popitem()
     for k,v in tweet_wordfreqs.items():
       try:
-        print "%s\t%f" % (k, v)
+        print "%s %f" % (k, v)
       except UnicodeEncodeError:
         # Not sure how to correct this error
         pass
