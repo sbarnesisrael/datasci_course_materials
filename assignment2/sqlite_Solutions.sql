@@ -60,7 +60,11 @@ and b.col_num = 3
 
 -- Assignment 2, Problem 3, Part h
 -- reuters.db
-
+select a.docid, b.term, sum(a.count * b.count)
+from frequency as a
+join frequency as b on b.term = a.term
+where a.docid = '10080_txt_crude'
+and b.docid = '17035_txt_earn'
 
 -- Assignment 2, Problem 3, Part i
 -- reuters.db
