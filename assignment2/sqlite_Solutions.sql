@@ -16,11 +16,11 @@ from (
 -- Assignment 2, Problem 1, Part c
 select count(*)
 from (
-     select * from frequency     
+     select term from frequency     
      where docid = '10398_txt_earn'     
      and count = 1     
      UNION
-     select * from frequency     
+     select term from frequency     
      where docid = '925_txt_trade'     
      and count = 1
 ) x
@@ -33,14 +33,41 @@ from (
 ) x
 
 -- Assignment 2, Problem 1, Part e
-select count(*)
-from (
-     select * from (
-            select a.docid, sum(a.count) as docsum from frequency as a, frequency as b     
-            where a.docid = b.docid
-            group by a.docid     
-            order by sum(a.count)
-     )
-) x
+select count(*) from (
+	select a.docid, a.count from frequency as a, frequency as b
+	where a.docid = b.docid
+	group by a.term
+	having sum(a.count) >= 300)
+select count(*) from docs_total where docsum >= 300 order by docsum desc;
+
+-- Assignment 2, Problem 1, Part f
+select count(*) from
+	(select * from frequency
+	where frequency.term = 'transactions'
+	union
+	select * from frequency
+	where frequency.term = 'world')
 
 
+-- Assignment 2, Problem 2, Part g
+-- matrix.db
+select a.row_num, b.col_num, sum(a.value * b.value)
+from a
+join b on b.row_num = a.col_num
+where a.row_num = 2
+and b.col_num = 3
+
+
+-- Assignment 2, Problem 3, Part h
+-- reuters.db
+
+
+-- Assignment 2, Problem 3, Part i
+-- reuters.db
+select * from frequency
+union
+select 'q' as docid, 'washington' as term, 1 as count
+union
+select 'q' as docid, 'taxes' as term, 1 as count
+union
+select 'q' as docid, 'treasury' as term, 1 as count
