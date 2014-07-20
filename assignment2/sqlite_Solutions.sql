@@ -34,17 +34,17 @@ from (
 
 -- Assignment 2, Problem 1, Part e
 select count(*) from (
-	select a.docid, a.count from frequency as a, frequency as b
-	where a.docid = b.docid
-	group by a.term
-	having sum(a.count) >= 300)
-select count(*) from docs_total where docsum >= 300 order by docsum desc;
+	select docid
+	from frequency
+	group by docid
+	having sum(count) > 300
+);
 
 -- Assignment 2, Problem 1, Part f
 select count(*) from
 	(select * from frequency
 	where frequency.term = 'transactions'
-	union
+	intersect
 	select * from frequency
 	where frequency.term = 'world')
 
@@ -68,10 +68,17 @@ and b.docid = '17035_txt_earn'
 
 -- Assignment 2, Problem 3, Part i
 -- reuters.db
+create view prob2 as 
 select * from frequency
 union
 select 'q' as docid, 'washington' as term, 1 as count
 union
 select 'q' as docid, 'taxes' as term, 1 as count
 union
-select 'q' as docid, 'treasury' as term, 1 as count
+select 'q' as docid, 'treasury' as term, 1 as count;
+
+select sum(count)
+from prob2
+where term in ('washington','taxes','treasury')
+groupd by docid
+order by sum(count) asc;
